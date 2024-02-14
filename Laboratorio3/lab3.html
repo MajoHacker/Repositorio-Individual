@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Laboratorio 3</title>
+    <link rel="stylesheet" type="text/css" href="lab3.css">
+</head>
+<body>
+    <nav>
+        <table>
+            <tr>
+                <th>Nombre</th>
+                <th>Matrícula</th>
+                <th>Correo</th>
+            </tr>
+            <tr>
+                <td>María José Gaytán Gil</td>
+                <td>A01706616</td>
+                <td>A0706616@tec.mx</td>
+            </tr>
+        </table>
+        <h2>Mi pasión:</h2>
+        <img src="images/Fut1.jpeg" alt="Futbol">
+        <p>El fútbol es mi más grande pasión, llevo practicándolo desde que tengo 10 años!</p>
+        <label for="jugador">¿Cuál es tu jugador favorito de fútbol?</label>
+        <input list="jugadores" name="jugador" id="jugador">
+        <datalist id="jugadores">
+            <option value="Messi">
+            <option value="CR7">
+            <option value="Mbappé">
+        </datalist>
+        <h2>Mi jugador favorito:</h2>
+        <img src="images/messi.jpeg" alt="Lionel Messi">
+        <p>Lionel Messi</p>
+        <p>¿Consideras que Messi debió haber ganado el mundial?</p>
+        <button class="button" onclick="respuestaSi()">Sí</button>
+        <button class="button" onclick="respuestaNo()">No</button>
+        <script>
+            function respuestaSi() {
+                alert("Obviamente lo merecía");
+            }
+
+            function respuestaNo() {
+                alert("Seguramente eres BichoLover");
+            }
+        </script>
+
+        <h2>¿En qué posición crees que juego?</h2>
+        <form>
+            <input type="checkbox" id="opcion1" name="opcion1" value="opcion1">
+            <label for="opcion1">Lateral</label><br>
+            <input type="checkbox" id="opcion2" name="opcion2" value="opcion2">
+            <label for="opcion2">Volante</label><br>
+            <input type="checkbox" id="opcion3" name="opcion3" value="opcion3">
+            <label for="opcion3">Delantera</label><br>
+        </form>
+        <div id="msj"></div>
+        <script>
+            // Obtener referencias
+            const opcion1Checkbox = document.getElementById('opcion1');
+            const opcion2Checkbox = document.getElementById('opcion2');
+            const opcion3Checkbox = document.getElementById('opcion3');
+
+            // event listeners para detectar cambios en los checkboxes
+            opcion1Checkbox.addEventListener('change', mostrarMensaje);
+            opcion2Checkbox.addEventListener('change', mostrarMensaje);
+            opcion3Checkbox.addEventListener('change', mostrarMensaje);
+
+            function mostrarMensaje() {
+                // div donde se mostrará el mensaje
+                const mensajeDiv = document.getElementById('msj');
+
+                // Reiniciar el contenido del div
+                mensajeDiv.innerHTML = '';
+
+                // Verificar qué checkboxes están seleccionados y mostrar el mensaje correspondiente
+                if (opcion1Checkbox.checked) {
+                    mensajeDiv.innerHTML += 'Cuando era pequeña solía jugar de lateral, sin embargo ahora soy volante';
+                }
+                if (opcion2Checkbox.checked) {
+                    mensajeDiv.innerHTML += 'Sí, juego de volante por izquierda';
+                }
+                if (opcion3Checkbox.checked) {
+                    mensajeDiv.innerHTML += 'No me desagrada la posición, sin embargo juego de volante';
+                }
+            }
+        </script>
+        <br>
+        <h2>Preguntas laboratorio 3:</h2>
+        <h3>¿Cómo ingeniero de software ¿cuál es tu recomendación sobre el uso de !important en un CSS?</h3>
+        <p>No suele usarse mucho, sin embargo cuando estas en un proyecto donde deseas que un atributo tenga más importancia sobre otro, este se vuelve muy útil ya que permite declarar un atributo de forma que este tenga prevalencia sobre otras declaraciones posteriores</p>
+        <h3>Si se pone una imagen de fondo en una página HTML, ¿por qué debe escogerse con cuidado?</h3>
+        <p>Debido a que la imagen de fondo puede contener colores que afecten la legibilidad del sitio, además imagenes de fondo pesadas pueden aumentar significativamente el tiempo de carga de la página, lo que generalmente lleva a una mala expereiencia del usuario.</p>
+        <h3>Como ingeniero de software, ¿cuál es tu recomendación al elegir las unidades de un propiedad de estilo entre %, px y pt?</h3>
+        <p>Considero que son muy importantes ya que pueden simplificar el trabajo, sin embargo su uso depende totalmente del contexto y los requisitos de diseño del proyecto.</p>
+        <h3>¿Por qué el uso de una versión minimizada del CSS mejora el rendimiento del sitio?</h3>
+        <p>Principalmente porque al reducir el código, se eliminan espacios en blanco, comentarios y otros caracteres no esenciales, lo que hace que el tiempo de descarga sea mucho más rapido.</p>
+    </nav>
+    <footer>
+        <p>Creado en: <a href="https://code.visualstudio.com/">Visual Studio Code</a></p>
+    </footer>
+</body>
+</html>

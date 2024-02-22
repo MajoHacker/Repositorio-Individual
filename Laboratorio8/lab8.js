@@ -124,7 +124,7 @@ const server = http.createServer( (request, response) => {
         } else if (!/[a-z]/.test(password) || !/[A-Z]/.test(password)) {
           textoValidacion.innerHTML = "La contraseña debe contener al menos una letra mayúscula y una letra minúscula";
           imagen.src = "images/triste.jpg";
-        } else if (!/\d/.test(password)) {
+        } else if (!/\\d/.test(password)) {
           textoValidacion.innerHTML = "La contraseña debe contener al menos un número";
           imagen.src = "images/triste.jpg";
         } else {

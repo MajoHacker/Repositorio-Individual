@@ -15,9 +15,12 @@ const promedio =() => {
 promedio();
 
 //ejercicio 2: Una función que reciba un string y escriba el string en un archivo de texto. Apóyate del módulo fs.
-const filesystem = require("fs");
-filesystem.writeFileSync("Hola.txt", "hola desde node");
-
+const string = "Messi es el mejor jugador del mundo";
+const ejercicio2 = () => {
+  const filesystem = require("fs");
+  filesystem.writeFileSync("Ejercicio 2.txt", string);
+}
+ejercicio2();
 
 // http es un módulo de node con todas las funciones de un servidor web
 const http = require("http");

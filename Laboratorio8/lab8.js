@@ -1,20 +1,25 @@
-setTimeout(() => {
-    console.log("jojo.te hakie");
-}, 7000);
+// Trabaje con Maxime el lab 8, solo que cada quien lo fue haciendo en su computadora
 
-const arreglo = [5000, 60, 20, 10, 7000, 340, 9000, 180];
+//ejercicio 1: Una función que reciba un arreglo de números y devuelva su promedio.
+const arreglo = [20, 30, 40, 10, 7, 7, 7, 1000];
 
-for (let item of arreglo){
-    setTimeout(() =>{
-        console.log(item);
-    }, item);
-}
+const promedio =() => {
+  let suma = 0;
+  let count = 0;
 
-console.log("esto se imprime antes de los números");
+  for(let count in arreglo){
+    suma = suma + arreglo[count];
+  }
+  console.log(suma/arreglo.length);
+  }
+promedio();
+
+//ejercicio 2: Una función que reciba un string y escriba el string en un archivo de texto. Apóyate del módulo fs.
 
 // http es un módulo de node con todas las funciones de un servidor web
 const http = require("http");
 
+//ejercicio 3: problema elegigo "Validador de contraseñas"
 const server = http.createServer( (request, response) => {
     console.log(request.url);
     response.setHeader("Content-Type", "text/html");

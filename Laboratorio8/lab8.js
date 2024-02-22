@@ -15,6 +15,9 @@ const promedio =() => {
 promedio();
 
 //ejercicio 2: Una función que reciba un string y escriba el string en un archivo de texto. Apóyate del módulo fs.
+const filesystem = require("fs");
+filesystem.writeFileSync("Hola.txt", "hola desde node");
+
 
 // http es un módulo de node con todas las funciones de un servidor web
 const http = require("http");
@@ -29,7 +32,7 @@ const server = http.createServer( (request, response) => {
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Laboratorio 6</title>
+    <title>Laboratorio 8</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
   </head>
   <body>
@@ -51,7 +54,7 @@ const server = http.createServer( (request, response) => {
           <br>
           <h1 id="texto_validacion"></h1>
           <br>
-          <img src="images/inicio.jpg" id ="imagen" width="224" height="48">
+          <img src="https://ca-times.brightspotcdn.com/dims4/default/11c7063/2147483647/strip/true/crop/5163x3442+0+0/resize/1200x800!/format/webp/quality/75/?url=https%3A%2F%2Fcalifornia-times-brightspot.s3.amazonaws.com%2F25%2F09%2F6b16ff9391709dd1e80759577652%2F484a8f72a8df42ecb8028aa35c651fae" id ="imagen" width="224" height="48">
 
         </form>
         <!-- preguntas -->
@@ -125,16 +128,16 @@ const server = http.createServer( (request, response) => {
         // criterios de contraseña
         if (password.length < 8) {
           textoValidacion.innerHTML = "La contraseña debe tener al menos 8 caracteres";
-          imagen.src = "images/triste.jpg";
+          imagen.src = "https://cdn2.dineroenimagen.com/820x640/filters:format(webp):quality(75)/media/dinero/images/2022/11/argentina-mundial-qatar-2022.jpg";
         } else if (!/[a-z]/.test(password) || !/[A-Z]/.test(password)) {
           textoValidacion.innerHTML = "La contraseña debe contener al menos una letra mayúscula y una letra minúscula";
-          imagen.src = "images/triste.jpg";
+          imagen.src = "https://cdn2.dineroenimagen.com/820x640/filters:format(webp):quality(75)/media/dinero/images/2022/11/argentina-mundial-qatar-2022.jpg";
         } else if (!/\\d/.test(password)) {
           textoValidacion.innerHTML = "La contraseña debe contener al menos un número";
-          imagen.src = "images/triste.jpg";
+          imagen.src = "https://cdn2.dineroenimagen.com/820x640/filters:format(webp):quality(75)/media/dinero/images/2022/11/argentina-mundial-qatar-2022.jpg";
         } else {
           textoValidacion.innerHTML = "La contraseña es válida";
-          imagen.src = "images/messirve.jpg";
+          imagen.src = "https://www.record.com.mx/sites/default/files/styles/v2-crop768x433/public/articulos/2020/02/01/lionel_messi_.jpg?itok=7wb_VIRn&changed=20200201164540";
           botonValidar.innerHTML = "Validar otra contraseña";
           botonValidar.classList.remove("is-info");
           botonValidar.classList.add("is-success");
@@ -153,7 +156,7 @@ const server = http.createServer( (request, response) => {
         var botonValidar = document.getElementById("boton_validar");
       
         textoValidacion.innerHTML = "";
-        imagen.src = "images/inicio.jpg";
+        imagen.src = "https://ca-times.brightspotcdn.com/dims4/default/11c7063/2147483647/strip/true/crop/5163x3442+0+0/resize/1200x800!/format/webp/quality/75/?url=https%3A%2F%2Fcalifornia-times-brightspot.s3.amazonaws.com%2F25%2F09%2F6b16ff9391709dd1e80759577652%2F484a8f72a8df42ecb8028aa35c651fae";
         botonValidar.innerHTML = "Validar";
         botonValidar.classList.remove("is-success");
         botonValidar.classList.add("is-info");

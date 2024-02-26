@@ -278,10 +278,6 @@ const contenido = `<!-- titulo -->
   </div>
 </div>
 
-<h3 class="text-center">
-  Fans registrados:
-</h3>
-
 <!-- pregunta del lab -->
 <br>
 <h3 class="text-center">
@@ -332,13 +328,36 @@ const footer = `<!-- parte final  -->
 </body>
 </html>
 `;
+
+const fans = [{nombre: "María José Gaytán", imagen: "https://www.cutelmex.com/2022b/recursos///jug/Maria-Jose/fotos/stock/27515__10_Maria_Jos___movHNormal.jpg"}];
+
 const http = require("http");
+
 const server = http.createServer( (request, response) => {
     console.log(request.url);
     
     if (request.url == "/"){
     response.setHeader("Content-Type", "text/html");
     response.write(header);
+    response.write(`<h3 class="text-center">Fans registrados:</h3>`);
+    let tarjetas_fan = '';
+    for(let fan of fans) {
+      tarjetas_fan += `
+      <!-- parte 1 -->
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-4">
+            <div class="card mb-4">
+              <img src="${fan.imagen}" class="card-img-top" alt="Imagen 1">
+              <div class="card-body">
+                <h5 class="card-title">${fan.nombre}</h5>
+              </div>
+            </div>
+          </div>
+      `;
+    }
+    response.write(tarjetas_fan);
+    response.write(`</div>`);
     response.write(contenido);
     response.write(footer);
     response.end();
@@ -354,18 +373,8 @@ const server = http.createServer( (request, response) => {
       response.end();
 
     } 
-    // ruta 2:
-    else if (request.url == "/fan"){
-      response.setHeader("Content-Type", "text/html");
-      response.write(header);
-      response.write(`
-        <h1> Registrate como fan:</h1>
-      `);
-      response.write(footer);
-      response.end();
 
-    } 
-    // ruta 3:
+    // ruta 2:
     else if (request.url == "/comentarios"){
       response.setHeader("Content-Type", "text/html");
       response.write(header);
@@ -376,6 +385,46 @@ const server = http.createServer( (request, response) => {
       response.end();
 
     } 
+
+    // ruta 3:
+    else if (request.url == "/fan" && request.method == "GET") {
+
+      response.write(header);
+      response.write(`
+        <h1 class="title">Registrate como un fan de Messi:</h1>
+          <form action="/fan" method="POST">
+            <label class="label" for="nombre">Nombre</label>
+            <input name="nombre" id="nombre" type="text" class="input"><br>
+            <label class="label" for="imagen">Imagen</label>
+            <input name="imagen" id="imagen" type="text" class="input"><br><br>
+            <input class="button is-success" type="submit" value="Registrarse">
+          </form>
+      `);
+      response.write(footer);
+      response.end();
+
+    }
+    else if (request.url == "/fan" && request.method == "POST") {
+
+      const datos = [];
+
+      request.on('data', (dato) => {
+          console.log(dato);
+          datos.push(dato);
+      });
+
+      return request.on('end', () => {
+          const datos_completos = Buffer.concat(datos).toString();
+          console.log(datos_completos);
+          const nombre = datos_completos.split('&')[0].split('=')[1];
+          console.log(nombre);
+          const imagen = datos_completos.split('&')[1].split('=')[1];
+          console.log(imagen);
+          fans.push({nombre: nombre, imagen: imagen});
+          return response.end();
+      });
+    }
+
     // ruta que no existe
     else {
       response.statusCode = 404;

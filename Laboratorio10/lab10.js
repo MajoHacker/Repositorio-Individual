@@ -339,6 +339,7 @@ const server = http.createServer( (request, response) => {
     response.write(footer);
     response.end();
 
+    // ruta 1:
      } else if (request.url == "/goles"){
       response.setHeader("Content-Type", "text/html");
       response.write(header);
@@ -348,7 +349,31 @@ const server = http.createServer( (request, response) => {
       response.write(footer);
       response.end();
 
-    } else {
+    } 
+    // ruta 2:
+    else if (request.url == "/fan"){
+      response.setHeader("Content-Type", "text/html");
+      response.write(header);
+      response.write(`
+        <h1> Registrate como fan:</h1>
+      `);
+      response.write(footer);
+      response.end();
+
+    } 
+    // ruta 3:
+    else if (request.url == "/comentarios"){
+      response.setHeader("Content-Type", "text/html");
+      response.write(header);
+      response.write(`
+        <h1> Deja un comentario:</h1>
+      `);
+      response.write(footer);
+      response.end();
+
+    } 
+    // ruta que no existe
+    else {
       response.statusCode = 404;
 
       response.setHeader("Content-Type", "text/html");
@@ -363,4 +388,3 @@ const server = http.createServer( (request, response) => {
 });
 
 server.listen(3000);
-

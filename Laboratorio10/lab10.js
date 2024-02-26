@@ -2,7 +2,7 @@
 const http = require("http");
 const server = http.createServer( (request, response) => {
     console.log(request.url);
-
+    if (request.url == "/"){
     const header = `<!doctype html>
     <html lang="en">
     <head>
@@ -339,6 +339,19 @@ const server = http.createServer( (request, response) => {
     response.write(contenido);
     response.write(footer);
     response.end();
+     } else if (request.url == "/goles"){
+      response.write(`
+        <h1> Los mejores goles de messi:</h1>
+    
+      `);
+    } else {
+      response.statusCode = 404;
+      response.write(`
+      <h1> No existe esa pagina</h1>
+      `);
+    }
+
 });
 
 server.listen(3000);
+

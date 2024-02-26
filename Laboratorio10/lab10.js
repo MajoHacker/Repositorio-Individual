@@ -278,6 +278,10 @@ const contenido = `<!-- titulo -->
   </div>
 </div>
 
+<h3 class="text-center">
+  Fans registrados:
+</h3>
+
 <!-- pregunta del lab -->
 <br>
 <h3 class="text-center">

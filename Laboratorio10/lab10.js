@@ -278,10 +278,6 @@ const contenido = `<!-- titulo -->
   </div>
 </div>
 
-<h3 class="text-center">
-  Fans registrados:
-</h3>
-
 <!-- pregunta del lab -->
 <br>
 <h3 class="text-center">
@@ -332,13 +328,36 @@ const footer = `<!-- parte final  -->
 </body>
 </html>
 `;
+
+const fans = [{nombre: "María José Gaytán"}];
+
 const http = require("http");
+
 const server = http.createServer( (request, response) => {
     console.log(request.url);
     
     if (request.url == "/"){
     response.setHeader("Content-Type", "text/html");
     response.write(header);
+    response.write(`<br><h3 class="text-center">Fans registrados:</h3>`);
+    let tarjetas_fan = '';
+    for(let fan of fans) {
+      tarjetas_fan += `
+      <!-- parte 1 -->
+      <br>
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-4">
+            <div class="card mb-4">
+              <div class="card-body">
+                <h5 class="card-title">${fan.nombre}</h5>
+              </div>
+            </div>
+          </div>
+      `;
+    }
+    response.write(tarjetas_fan);
+    response.write(`</div>`);
     response.write(contenido);
     response.write(footer);
     response.end();
@@ -348,34 +367,72 @@ const server = http.createServer( (request, response) => {
       response.setHeader("Content-Type", "text/html");
       response.write(header);
       response.write(`
-        <h1> Los mejores goles de messi:</h1>
+        <h3> Los mejores goles de messi:</h3>
+        <br>
+        <div class="container">
+        <div class="embed-responsive embed-responsive-16by9">
+          <iframe class="embed-responsive-item" src="https://youtu.be/rpo_mZXoyig" allowfullscreen></iframe>
+        </div>
+      </div>
+      <br><br>
       `);
       response.write(footer);
       response.end();
 
     } 
+
     // ruta 2:
-    else if (request.url == "/fan"){
-      response.setHeader("Content-Type", "text/html");
-      response.write(header);
-      response.write(`
-        <h1> Registrate como fan:</h1>
-      `);
-      response.write(footer);
-      response.end();
-
-    } 
-    // ruta 3:
     else if (request.url == "/comentarios"){
       response.setHeader("Content-Type", "text/html");
       response.write(header);
       response.write(`
-        <h1> Deja un comentario:</h1>
+        <br><h3> Deja un comentario:</h3>
+        <div class="mb-3">
+        <input type="text" class="form-control" id="comentario" placeholder="Escribe aqui tu comentario">
+        </div>
+        <button type="button" class="btn btn-outline-info">Enviar</button>
+        <br><br>
       `);
       response.write(footer);
       response.end();
 
     } 
+
+    // ruta 3:
+    else if (request.url == "/fan" && request.method == "GET") {
+
+      response.write(header);
+      response.write(`
+        <br><h3 class="title">Registrate como un fan de Messi:</h3>
+          <form action="/fan" method="POST">
+            <label class="label" for="nombre">Nombre</label>
+            <input name="nombre" id="nombre" type="text" class="input"><br>
+            <br><input class="btn btn-outline-info" type="submit" value="Registrarse"><br><br>
+          </form>
+      `);
+      response.write(footer);
+      response.end();
+
+    }
+    else if (request.url == "/fan" && request.method == "POST") {
+
+      const datos = [];
+
+      request.on('data', (dato) => {
+          console.log(dato);
+          datos.push(dato);
+      });
+
+      return request.on('end', () => {
+          const datos_completos = Buffer.concat(datos).toString();
+          console.log(datos_completos);
+          const nombre = datos_completos.split('&')[0].split('=')[1];
+          console.log(nombre);
+          fans.push({nombre: nombre});
+          return response.end();
+      });
+    }
+
     // ruta que no existe
     else {
       response.statusCode = 404;
@@ -383,7 +440,7 @@ const server = http.createServer( (request, response) => {
       response.setHeader("Content-Type", "text/html");
       response.write(header);
       response.write(`
-      <h1> No existe esa pagina</h1>
+      <br><h3 class = "text-center"> No existe esta página</h3><br><br>
       `);
       response.write(footer);
       response.end();

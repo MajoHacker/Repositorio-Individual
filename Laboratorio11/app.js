@@ -422,13 +422,11 @@ const server = http.createServer( (request, response) => {
           const nombre = datos_completos.split('&')[0].split('=')[1];
           console.log(nombre);
           fans.push({nombre: nombre});
-
+          
           //archivo
           const top = `${nombre}\n`;
-          const filesystem = require("fs");
-          filesystem.appendFileSync(`Top.text`, top);
+          FileSystem.appendFileSync(`Top.text`, top);
           response.write(`<script>alert("Te registraste correctamente");</script>`)
-
           return response.end();
       });
     }

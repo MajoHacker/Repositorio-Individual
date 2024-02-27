@@ -424,9 +424,9 @@ const server = http.createServer( (request, response) => {
           fans.push({nombre: nombre});
 
           //archivo
-          const top = `${nombre}\n`;
+          const fans_registrados = `${nombre}\n`;
           const filesystem = require("fs");
-          filesystem.appendFileSync(`Top.text`, top);
+          filesystem.appendFileSync(`fans_registrados.text`, fans_registrados);
           response.write(`<script>alert("Te registraste correctamente");</script>`)
 
           return response.end();

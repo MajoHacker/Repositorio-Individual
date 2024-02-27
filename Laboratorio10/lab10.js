@@ -30,21 +30,13 @@ const header = `<!doctype html>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+                    <a class="nav-link active" aria-current="page" href="/goles">Goles</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Comentarios</a>
+                    <a class="nav-link" href="/fan">Registrate</a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Más info
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Goles</a></li>
-                        <li><a class="dropdown-item" href="#">Asistencias</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Enlaces externos</a></li>
-                    </ul>
+                <li class="nav-item">
+                  <a class="nav-link" href="/comentarios">Comenta</a>
                 </li>
             </ul>
             <form class="d-flex" role="search">
@@ -53,7 +45,8 @@ const header = `<!doctype html>
             </form>
         </div>
     </div>
-</nav>`;
+</nav>
+`;
 
 const contenido = `<!-- titulo -->
 <br>

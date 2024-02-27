@@ -19,5 +19,8 @@
   "homepage": "https://github.com/MajoHacker/Repositorio-Individual/tree/main#readme",
   "devDependencies": {
     "nodemon": "^3.1.0"
+  },
+  "dependencies": {
+    "body-parser": "^1.20.2"
   }
 }

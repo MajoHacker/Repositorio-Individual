@@ -1,29 +1,9 @@
-const express = require('express');
-const app = express();
-const bodyParser = require('body-parser');
-app.use(bodyParser.urlencoded({extended: false}));
-
-const fan = [
-  {
-    nombre: "majo",
-  }
-]
-             
-//Middleware
-app.use((request, response, next) => {
-  console.log('Middleware!');
-  next(); //Le permite a la petición avanzar hacia el siguiente middleware
-});
-
-app.get('/fan', (request, response, next) => {
-  console.log(request.body);
-  response.send(`
-  <!doctype html>
+const header = `<!doctype html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Laboratorio 10</title>
+    <title>Laboratorio 11</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <style>
       .custom-bg {
@@ -66,72 +46,9 @@ app.get('/fan', (request, response, next) => {
         </div>
     </div>
 </nav>
-  <br><h3 class="title">Registrate como un fan de Messi:</h3>
-  <form action="/fan" method="POST">
-    <label class="label" for="nombre">Nombre</label>
-    <input name="nombre" id="nombre" type="text" class="input"><br>
-    <br><input class="btn btn-outline-info" type="submit" value="Registrarse"><br><br>
-  </form>
-  `); 
-});
+`;
 
-app.post('/fan', (request, response, next)=>{
-  console.log(request.body);
-  fan.push(request.body);
-  response.redirect('/');
-});
-
-app.get('/', (request, response, next) => {
-  console.log('Ruta /');
-  response.send(`<!doctype html>
-  <html lang="en">
-  <head>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <title>Laboratorio 10</title>
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-      <style>
-        .custom-bg {
-          background-color: #e5edf4; 
-        }
-      </style>
-      <style>
-        .highlight {
-          background-color: rgb(173, 229, 244);
-          font-weight: bold;
-        }
-      </style>
-    </head>
-  <body class="custom-bg">
-  <!-- Aquí empieza (barra navegadora) -->
-  <nav class="navbar navbar-expand-lg bg-body-tertiary">
-      <div class="container-fluid">
-          <a class="navbar-brand" href="#">
-              <img src="https://i.pinimg.com/originals/a9/b0/18/a9b01823301e96fb593458fd3713f2fe.png" alt="Messi" width="60" height="40">
-          </a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                  <li class="nav-item">
-                      <a class="nav-link active" aria-current="page" href="/goles">Goles</a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link" href="/fan">Registrate</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="/comentarios">Comenta</a>
-                  </li>
-              </ul>
-              <form class="d-flex" role="search">
-                  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                  <button class="btn btn-info" type="submit">Buscar</button>
-              </form>
-          </div>
-      </div>
-  </nav>
-  <!-- titulo -->
+const contenido = `<!-- titulo -->
 <br>
 <h3 class="text-center">
     ¿Por qué Messi es mejor que Cristiano Ronaldo?
@@ -357,19 +274,14 @@ app.get('/', (request, response, next) => {
 <!-- pregunta del lab -->
 <br>
 <h3 class="text-center">
-    Pregunta lab 4: 
-    <small class="text-body-secondary">Describe Material design</small>
+    Pregunta lab 11: 
+    <small class="text-body-secondary">Describe el archivo package.json.</small>
 </h3>
 <div class="container">
   <div class="row justify-content-center">
       <div class="col-lg-8">
           <h6 class="text-justify lh-base" style="color: #333131;">
-            Es un sistema de diseño desarrollado por Google que se introdujo en 2014. Que se basa en el diseño para la creación de interfaces visualmente atractivas y funcionales para el usuario. 
-            Algunos de los principios claves de Material Design son:<br>
-            <br><span class="highlight">1. Materialidad</span> consiste en que los objetos deben verse realistas (sombras, profundidad, movimiento).<br>
-            <br><span class="highlight">2. Animaciones y transiciones:</span> guiar y mejorar la comprensión del usuario.<br>
-            <br><span class="highlight">3. Colores y tipografía:</span> ayuda a crear una identidad visual única y reconocible. <br>
-            <br><span class="highlight">4. Iconografía:</span> simples, claros y fácilmente reconocibles.<br>
+            Aqui hacer la descripción
           </h6>
       </div>
   </div>
@@ -384,15 +296,16 @@ app.get('/', (request, response, next) => {
   <div class="row justify-content-center">
       <div class="col-lg-8">
           <h6 class="text-justify lh-base" style="color: #333131;">
-          Material design. (s.f.). Material Design. https://m2.material.io/design/introduction<br><br>
-          Messi vs. Cristiano: la historia del gran duelo entre ambos - ESPN. (2024, 30 enero). ESPN.com.mx. https://www.espn.com.mx/futbol/nota/_/id/11490729/messi-vs-cristiano-la-historia-del-gran-duelo-entre-ambos
+          Aqui poner las referencias
           </h6>
       </div>
   </div>
 </div>
 <br>
 <br>
-<!-- parte final  -->
+`;
+
+const footer = `<!-- parte final  -->
 <footer class="footer mt-auto py-3 bg-light">
   <div class="container text-center">
     <span class="text-muted">Creado por María José Gaytán Gil</span>
@@ -401,62 +314,67 @@ app.get('/', (request, response, next) => {
 
 </body>
 </html>
-  `); 
+`;
+
+const express = require('express');
+const app = express();
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({extended: false}));
+
+const fan = [
+  {
+    nombre: "majo",
+  }
+]
+             
+//Middleware
+app.use((request, response, next) => {
+  console.log('Middleware!');
+  next(); //Le permite a la petición avanzar hacia el siguiente middleware
+});
+
+app.get('/fan', (request, response, next) => {
+  console.log(request.body);
+  response.send(header + `
+  <br><h3 class="title">Registrate como un fan de Messi:</h3>
+  <form action="/fan" method="POST">
+    <label class="label" for="nombre">Nombre</label>
+    <input name="nombre" id="nombre" type="text" class="input"><br>
+    <br><input class="btn btn-outline-info" type="submit" value="Registrarse"><br><br>
+  </form>
+  ` + footer); 
+});
+
+app.post('/fan', (request, response, next)=>{
+  console.log(request.body);
+  fan.push(request.body);
+  response.redirect('/');
+});
+
+app.get('/', (request, response, next) => {
+  console.log('Ruta /');
+  response.send(header + `
+  <br><h3 class="text-center">Fans registrados:</h3>
+  <!-- parte 1 -->
+  <br>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-4">
+        <div class="card mb-4">
+          <div class="card-body">
+            <h5 class="card-title">${fan.nombre}</h5>
+          </div>
+        </div>
+      </div>
+  `+ contenido + footer); 
 });
 
 app.use((request, response, next) => {
   response.status(404);
-  response.send(`<!doctype html>
-  <html lang="en">
-  <head>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <title>Laboratorio 10</title>
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-      <style>
-        .custom-bg {
-          background-color: #e5edf4; 
-        }
-      </style>
-      <style>
-        .highlight {
-          background-color: rgb(173, 229, 244);
-          font-weight: bold;
-        }
-      </style>
-    </head>
-  <body class="custom-bg">
-  <!-- Aquí empieza (barra navegadora) -->
-  <nav class="navbar navbar-expand-lg bg-body-tertiary">
-      <div class="container-fluid">
-          <a class="navbar-brand" href="#">
-              <img src="https://i.pinimg.com/originals/a9/b0/18/a9b01823301e96fb593458fd3713f2fe.png" alt="Messi" width="60" height="40">
-          </a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                  <li class="nav-item">
-                      <a class="nav-link active" aria-current="page" href="/goles">Goles</a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link" href="/fan">Registrate</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="/comentarios">Comenta</a>
-                  </li>
-              </ul>
-              <form class="d-flex" role="search">
-                  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                  <button class="btn btn-info" type="submit">Buscar</button>
-              </form>
-          </div>
-      </div>
-  </nav>
-  <br>
+  response.send(header + 
+  `
   <br><h3 class = "text-center"> No existe esta página</h3><br><br>
-  `);
+  ` + footer);
   
 });
 

@@ -329,7 +329,7 @@ const footer = `<!-- parte final  -->
 </html>
 `;
 
-const fans = [{nombre: "María José Gaytán", imagen: "https://www.cutelmex.com/2022b/recursos///jug/Maria-Jose/fotos/stock/27515__10_Maria_Jos___movHNormal.jpg"}];
+const fans = [{nombre: "María José Gaytán"}];
 
 const http = require("http");
 
@@ -339,16 +339,16 @@ const server = http.createServer( (request, response) => {
     if (request.url == "/"){
     response.setHeader("Content-Type", "text/html");
     response.write(header);
-    response.write(`<h3 class="text-center">Fans registrados:</h3>`);
+    response.write(`<br><h3 class="text-center">Fans registrados:</h3>`);
     let tarjetas_fan = '';
     for(let fan of fans) {
       tarjetas_fan += `
       <!-- parte 1 -->
+      <br>
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-md-4">
             <div class="card mb-4">
-              <img src="${fan.imagen}" class="card-img-top" alt="Imagen 1">
               <div class="card-body">
                 <h5 class="card-title">${fan.nombre}</h5>
               </div>
@@ -367,7 +367,14 @@ const server = http.createServer( (request, response) => {
       response.setHeader("Content-Type", "text/html");
       response.write(header);
       response.write(`
-        <h1> Los mejores goles de messi:</h1>
+        <h3> Los mejores goles de messi:</h3>
+        <br>
+        <div class="container">
+        <div class="embed-responsive embed-responsive-16by9">
+          <iframe class="embed-responsive-item" src="https://youtu.be/rpo_mZXoyig" allowfullscreen></iframe>
+        </div>
+      </div>
+      <br><br>
       `);
       response.write(footer);
       response.end();
@@ -379,7 +386,12 @@ const server = http.createServer( (request, response) => {
       response.setHeader("Content-Type", "text/html");
       response.write(header);
       response.write(`
-        <h1> Deja un comentario:</h1>
+        <br><h3> Deja un comentario:</h3>
+        <div class="mb-3">
+        <input type="text" class="form-control" id="comentario" placeholder="Escribe aqui tu comentario">
+        </div>
+        <button type="button" class="btn btn-outline-info">Enviar</button>
+        <br><br>
       `);
       response.write(footer);
       response.end();
@@ -391,13 +403,11 @@ const server = http.createServer( (request, response) => {
 
       response.write(header);
       response.write(`
-        <h1 class="title">Registrate como un fan de Messi:</h1>
+        <br><h3 class="title">Registrate como un fan de Messi:</h3>
           <form action="/fan" method="POST">
             <label class="label" for="nombre">Nombre</label>
             <input name="nombre" id="nombre" type="text" class="input"><br>
-            <label class="label" for="imagen">Imagen</label>
-            <input name="imagen" id="imagen" type="text" class="input"><br><br>
-            <input class="button is-success" type="submit" value="Registrarse">
+            <br><input class="btn btn-outline-info" type="submit" value="Registrarse"><br><br>
           </form>
       `);
       response.write(footer);
@@ -418,9 +428,7 @@ const server = http.createServer( (request, response) => {
           console.log(datos_completos);
           const nombre = datos_completos.split('&')[0].split('=')[1];
           console.log(nombre);
-          const imagen = datos_completos.split('&')[1].split('=')[1];
-          console.log(imagen);
-          fans.push({nombre: nombre, imagen: imagen});
+          fans.push({nombre: nombre});
           return response.end();
       });
     }
@@ -432,7 +440,7 @@ const server = http.createServer( (request, response) => {
       response.setHeader("Content-Type", "text/html");
       response.write(header);
       response.write(`
-      <h1> No existe esa pagina</h1>
+      <br><h3 class = "text-center"> No existe esta página</h3><br><br>
       `);
       response.write(footer);
       response.end();

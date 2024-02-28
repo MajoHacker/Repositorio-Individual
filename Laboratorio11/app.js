@@ -38,6 +38,12 @@ const header = `<!doctype html>
                 <li class="nav-item">
                   <a class="nav-link" href="/comentarios">Comenta</a>
                 </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/majo">Jugadas Majo</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/entrevista">Entrevista</a>
+                </li>
             </ul>
             <form class="d-flex" role="search">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -321,11 +327,11 @@ const app = express();
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended: false}));
 
-const fan = [
+const fans = [
   {
-    nombre: "majo",
+    nombre: "María José Gaytán",
   }
-]
+];
              
 //Middleware
 app.use((request, response, next) => {
@@ -347,26 +353,81 @@ app.get('/fan', (request, response, next) => {
 
 app.post('/fan', (request, response, next)=>{
   console.log(request.body);
-  fan.push(request.body);
+  fans.push(request.body);
   response.redirect('/');
 });
 
 app.get('/', (request, response, next) => {
   console.log('Ruta /');
-  response.send(header + `
-  <br><h3 class="text-center">Fans registrados:</h3>
-  <!-- parte 1 -->
-  <br>
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-4">
-        <div class="card mb-4">
-          <div class="card-body">
-            <h5 class="card-title">${fan.nombre}</h5>
+  let tarjetas_fan = '';
+    for(let fan of fans) {
+      tarjetas_fan += `
+      <!-- parte 1 -->
+      <br>
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-4">
+            <div class="card mb-4">
+              <div class="card-body">
+                <h5 class="card-title">${fan.nombre}</h5>
+              </div>
+            </div>
           </div>
+      `};
+  response.send(header + `<br><h3 class="text-center">Fans registrados:</h3>`+ tarjetas_fan + contenido + footer); 
+});
+
+app.get('/goles', (request, response, next) => {
+  console.log('Ruta /goles');
+  response.send(header + `
+  <h3> Los mejores goles de messi:</h3>
+        <br>
+        <div class="container">
+        <div class="embed-responsive embed-responsive-16by9">
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/RM0ql8360J4?si=lfh89qfoz_U8EaNW" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
         </div>
       </div>
-  `+ contenido + footer); 
+      <br><br>
+  `+ footer); 
+});
+
+app.get('/majo', (request, response, next) => {
+  console.log('Ruta /majo');
+  response.send(header + `
+  <h3> Mis mejores jugadas:</h3>
+        <br>
+        <div class="container">
+        <div class="embed-responsive embed-responsive-16by9">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/RTQ9Hi_fIJk?si=yCEWxhTJbVsnIDmU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+      </div>
+      <br><br>
+  `+ footer); 
+});
+
+app.get('/entrevista', (request, response, next) => {
+  console.log('Ruta /entrevista');
+  response.send(header + `
+  <h3> Entrevista a messi:</h3>
+        <br>
+        <div class="container">
+        <div class="embed-responsive embed-responsive-16by9">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/qYwlqx-JLok?si=JFjQm2W5Ik1APhrW" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
+      <br><br>
+  `+ footer); 
+});
+
+app.get('/comentarios', (request, response, next) => {
+  console.log('Ruta /comentarios');
+  response.send(header + `
+  <br><h3> Deja un comentario:</h3>
+  <div class="mb-3">
+  <input type="text" class="form-control" id="comentario" placeholder="Escribe aqui tu comentario">
+  </div>
+  <button type="button" class="btn btn-outline-info">Enviar</button>
+  <br><br>
+  `+ footer); 
 });
 
 app.use((request, response, next) => {

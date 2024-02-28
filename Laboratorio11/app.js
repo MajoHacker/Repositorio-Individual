@@ -332,7 +332,7 @@ const fans = [
     nombre: "María José Gaytán",
   }
 ];
-             
+    
 //Middleware
 app.use((request, response, next) => {
   console.log('Middleware!');
@@ -354,6 +354,10 @@ app.get('/fan', (request, response, next) => {
 app.post('/fan', (request, response, next)=>{
   console.log(request.body);
   fans.push(request.body);
+  const nombre = request.body['nombre'];
+  const fans_registrados = `${nombre}\n`;
+  const filesystem = require("fs");
+  filesystem.appendFileSync(`fans_registrados.text`, fans_registrados);
   response.redirect('/');
 });
 
@@ -425,10 +429,12 @@ app.get('/comentarios', (request, response, next) => {
   <div class="mb-3">
   <input type="text" class="form-control" id="comentario" placeholder="Escribe aqui tu comentario">
   </div>
-  <button type="button" class="btn btn-outline-info">Enviar</button>
+  <button type="submit" class="btn btn-outline-info" id="btnEnviar">Enviar</button>
   <br><br>
   `+ footer); 
 });
+
+
 
 app.use((request, response, next) => {
   response.status(404);
@@ -440,4 +446,3 @@ app.use((request, response, next) => {
 });
 
 app.listen(3000);
-                      

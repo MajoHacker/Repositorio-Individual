@@ -287,7 +287,20 @@ const contenido = `<!-- titulo -->
   <div class="row justify-content-center">
       <div class="col-lg-8">
           <h6 class="text-justify lh-base" style="color: #333131;">
-            Aqui hacer la descripción
+          Es un archivo de metadatos utilizado principalmente en proyectos de Node.js para describir y gestionar las dependencias, configuraciones y scripts del proyecto.<br><br>
+          Algunos campos comunes son: <br><br>
+          <span class="highlight">nombre:</span> El nombre del proyecto.
+          <br><br>
+          <span class="highlight">versión:</span> La versión actual del paquete.
+          <br><br>
+          <span class="highlight">descripción:</span> Una breve descripción del proyecto.
+          <br><br>
+          <span class="highlight">scripts:</span> Un objeto que contiene comandos de shell utilizados para diversas tareas, como ejecutar pruebas.
+          <br><br>
+          <span class="highlight">autor:</span> La persona responsable del paquete.
+          <br><br>
+          <span class="highlight">repository:</span> La URL del repositorio de código fuente del paquete.
+          <br>
           </h6>
       </div>
   </div>
@@ -302,7 +315,7 @@ const contenido = `<!-- titulo -->
   <div class="row justify-content-center">
       <div class="col-lg-8">
           <h6 class="text-justify lh-base" style="color: #333131;">
-          Aqui poner las referencias
+          El archivo package.json - Javascript en español. (s. f.). Lenguaje JS. https://lenguajejs.com/npm/administracion/package-json/#:~:text=Este%20archivo%20es%20un%20simple,y%20recuperar%20informaci%C3%B3n%20muy%20%C3%BAtil.
           </h6>
       </div>
   </div>
@@ -433,8 +446,6 @@ app.get('/comentarios', (request, response, next) => {
   <br><br>
   `+ footer); 
 });
-
-
 
 app.use((request, response, next) => {
   response.status(404);

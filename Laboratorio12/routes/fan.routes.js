@@ -6,6 +6,7 @@ const fans = [
     nombre: "María José Gaytán",
   }
 ];
+
 router.get('/', (request, response, next) => {
   console.log('Ruta /');
   response.render('main' , {

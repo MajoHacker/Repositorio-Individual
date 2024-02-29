@@ -16,9 +16,12 @@ app.use((request, response, next) => {
 
 
 
-// Registrar modulo Fans
+
 const rutasFans = require('./routes/fan.routes');
 app.use('/', rutasFans);
+
+const rutasComentarios = require('./routes/comentarios.routes');
+app.use('/', rutasComentarios);
 
 app.use((request, response, next) => {
   response.status(404);

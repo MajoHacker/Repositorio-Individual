@@ -392,17 +392,8 @@ app.get('/entrevista', (request, response, next) => {
   `+ footer); 
 });
 
-app.get('/comentarios', (request, response, next) => {
-  console.log('Ruta /comentarios');
-  response.send(header + `
-  <br><h3> Deja un comentario:</h3>
-  <div class="mb-3">
-  <input type="text" class="form-control" id="comentario" placeholder="Escribe aqui tu comentario">
-  </div>
-  <button type="submit" class="btn btn-outline-info" id="btnEnviar">Enviar</button>
-  <br><br>
-  `+ footer); 
-});
+const rutasComentarios = require('./routes/comentario.routes');
+app.use('/', rutasComentarios);
 
 app.use((request, response, next) => {
   response.status(404);

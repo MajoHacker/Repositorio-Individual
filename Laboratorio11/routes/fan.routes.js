@@ -336,81 +336,54 @@ const footer = `<!-- parte final  -->
 `;
 
 const express = require('express');
-const app = express();
-const bodyParser = require('body-parser');
-app.use(bodyParser.urlencoded({extended: false}));
+const router = express.Router();
 
-    
-//Middleware
-app.use((request, response, next) => {
-  console.log('Middleware!');
-  next(); //Le permite a la petición avanzar hacia el siguiente middleware
-});
+const fans = [
+    {
+      nombre: "María José Gaytán",
+    }
+  ];
 
-const rutasFans = require('./routes/fan.routes');
-app.use('/', rutasFans);
-
-
-app.get('/goles', (request, response, next) => {
-  console.log('Ruta /goles');
-  response.send(header + `
-  <h3> Los mejores goles de messi:</h3>
-        <br>
-        <div class="container">
-        <div class="embed-responsive embed-responsive-16by9">
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/RM0ql8360J4?si=lfh89qfoz_U8EaNW" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-        </div>
-      </div>
-      <br><br>
-  `+ footer); 
-});
-
-app.get('/majo', (request, response, next) => {
-  console.log('Ruta /majo');
-  response.send(header + `
-  <h3> Mis mejores jugadas:</h3>
-        <br>
-        <div class="container">
-        <div class="embed-responsive embed-responsive-16by9">
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/RTQ9Hi_fIJk?si=yCEWxhTJbVsnIDmU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-        </div>
-      </div>
-      <br><br>
-  `+ footer); 
-});
-
-app.get('/entrevista', (request, response, next) => {
-  console.log('Ruta /entrevista');
-  response.send(header + `
-  <h3> Entrevista a messi:</h3>
-        <br>
-        <div class="container">
-        <div class="embed-responsive embed-responsive-16by9">
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/qYwlqx-JLok?si=JFjQm2W5Ik1APhrW" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-      </div>
-      <br><br>
-  `+ footer); 
-});
-
-app.get('/comentarios', (request, response, next) => {
-  console.log('Ruta /comentarios');
-  response.send(header + `
-  <br><h3> Deja un comentario:</h3>
-  <div class="mb-3">
-  <input type="text" class="form-control" id="comentario" placeholder="Escribe aqui tu comentario">
-  </div>
-  <button type="submit" class="btn btn-outline-info" id="btnEnviar">Enviar</button>
-  <br><br>
-  `+ footer); 
-});
-
-app.use((request, response, next) => {
-  response.status(404);
-  response.send(header + 
-  `
-  <br><h3 class = "text-center"> No existe esta página</h3><br><br>
-  ` + footer);
+router.get('/fan', (request, response, next) => {
+    console.log(request.body);
+    response.send(header + `
+    <br><h3 class="title">Registrate como un fan de Messi:</h3>
+    <form action="/fan" method="POST">
+      <label class="label" for="nombre">Nombre</label>
+      <input name="nombre" id="nombre" type="text" class="input"><br>
+      <br><input class="btn btn-outline-info" type="submit" value="Registrarse"><br><br>
+    </form>
+    ` + footer); 
+  });
   
+router.post('/fan', (request, response, next)=>{
+    console.log(request.body);
+    fans.push(request.body);
+    const nombre = request.body['nombre'];
+    const fans_registrados = `${nombre}\n`;
+    const filesystem = require("fs");
+    filesystem.appendFileSync(`fans_registrados.text`, fans_registrados);
+    response.redirect('/');
+  });
+
+router.get('/', (request, response, next) => {
+    console.log('Ruta /');
+    let tarjetas_fan = '';
+      for(let fan of fans) {
+        tarjetas_fan += `
+        <!-- parte 1 -->
+        <br>
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-md-4">
+              <div class="card mb-4">
+                <div class="card-body">
+                  <h5 class="card-title">${fan.nombre}</h5>
+                </div>
+              </div>
+            </div>
+        `};
+    response.send(header + `<br><h3 class="text-center">Fans registrados:</h3>`+ tarjetas_fan + contenido + footer); 
 });
 
-app.listen(3000);
+module.exports = router;

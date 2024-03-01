@@ -14,9 +14,6 @@ app.use((request, response, next) => {
   next(); //Le permite a la petición avanzar hacia el siguiente middleware
 });
 
-
-
-
 const rutasFans = require('./routes/fan.routes');
 app.use('/', rutasFans);
 

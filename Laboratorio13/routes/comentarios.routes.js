@@ -1,24 +1,14 @@
 const express = require('express');
 const router = express.Router();
+const comentariosController = require('../controllers/comentarios.controller');
 
-router.get('/comentarios', (request, response, next) => {
-    console.log('Ruta /comentarios');
-  response.render('comentarios')
-});
+router.get('/comentarios', comentariosController.get_comentarios);
+router.post('/comentarios', comentariosController.post_comentarios);
 
-router.get('/goles', (request, response, next) => {
-    console.log('Ruta /goles');
-  response.render('goles')
-});
+router.get('/goles', comentariosController.get_goles);
 
-router.get('/majo', (request, response, next) => {
-    console.log('Ruta /majo');
-  response.render('majo')
-});
+router.get('/majo', comentariosController.get_majo);
 
-router.get('/entrevista', (request, response, next) => {
-    console.log('Ruta /entrevistas');
-  response.render('entrevistas')
-});
+router.get('/entrevista', comentariosController.get_entrevista);
 
 module.exports = router;

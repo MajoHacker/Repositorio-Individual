@@ -14,11 +14,11 @@ app.use((request, response, next) => {
   next(); //Le permite a la petición avanzar hacia el siguiente middleware
 });
 
+const rutasComentarios = require('./routes/comentarios.routes');
+app.use('/comentarios', rutasComentarios);
+
 const rutasFans = require('./routes/fan.routes');
 app.use('/', rutasFans);
-
-const rutasComentarios = require('./routes/comentarios.routes');
-app.use('/', rutasComentarios);
 
 app.use((request, response, next) => {
   response.status(404);

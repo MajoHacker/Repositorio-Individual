@@ -1,7 +1,7 @@
 {
   "name": "laboratorio13",
   "version": "1.0.0",
-  "description": "Laboratorio13",
+  "description": "Lab13",
   "main": "app.js",
   "scripts": {
     "start": "nodemon app.js",
@@ -11,12 +11,15 @@
     "type": "git",
     "url": "git+https://github.com/MajoHacker/Repositorio-Individual.git#main"
   },
-  "author": "María José Gaytán Gil",
+  "author": "Maria Jose Gaytan Gil",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/MajoHacker/Repositorio-Individual/issues"
   },
   "homepage": "https://github.com/MajoHacker/Repositorio-Individual/tree/main#readme",
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  },
   "dependencies": {
     "body-parser": "^1.20.2",
     "ejs": "^3.1.9",

@@ -1,0 +1,15 @@
+<%- include('includes/head.ejs') %>
+
+<br><h3 class="text-center">Registrate en la página</h3>
+<div class="form-floating mb-3">
+<form action="/users/login" method="POST">
+    <label class="label" for="username">Nombre de usuario</label>
+    <input name="username" id="username" type="text" class="input"><br>
+    <label class="label" for="password">Contraseña</label>
+    <input name="password" id="password" type="password" class="input"><br><br>
+    <input class="btn btn-outline-info" type="submit" value="Entrar">
+</form>
+
+</div>
+
+<%- include('includes/foot.ejs') %>

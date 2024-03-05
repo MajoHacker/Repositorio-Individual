@@ -4,6 +4,7 @@ exports.get_fans = (request, response, next) => {
     console.log('Ruta /fan');
     response.render('fan', {
       fans: Fan.fetchAll(),
+      username: request.session.username || '',
     });
   };
 
@@ -28,5 +29,7 @@ exports.get_root = (request, response, next) => {
     response.render('main' , {
       fans: Fan.fetchAll(),
       ultimo_fan: ultimo_fan,
+      username: request.session.username || '',
     });
   };
+

@@ -14,18 +14,20 @@ exports.post_fans = (request, response, next) => {
     fans.save();
 
     response.setHeader('Set-Cookie', 'ultimo_fan=' + request.body.nombre + '; HttpOnly');
+    // request.cookies.ultimo_fan = request.body.nombre;
     response.redirect('/');
   };
 
 exports.get_root = (request, response, next) => {
     console.log('Ruta /');
     let ultimo_fan = request.get('Cookie')
-    if (ultimo_fan){
-      ultimo_fan = ultimo_fan.split('=')[1] || '';
-    }
-    else {
-      ultimo_fan = '';
-    }
+    // if (ultimo_fan){
+    //   ultimo_fan = ultimo_fan.split('=')[1] || '';
+    // }
+    // else {
+    //   ultimo_fan = '';
+    // }
+    request.cookies.ultimo_fan
     response.render('main' , {
       fans: Fan.fetchAll(),
       ultimo_fan: ultimo_fan,

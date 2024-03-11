@@ -35,7 +35,7 @@ exports.get_root = (request, response, next) => {
     request.cookies.ultimo_fan
 
     //Nuevo
-    Fan.fetchAll(request.params.fans_idfans).then(([rows, fieldData]) => {
+    Fan.fetch(request.params.idfans).then(([rows, fieldData]) => {
       console.log(fieldData);
       console.log(rows);
       return response.render("main" , {

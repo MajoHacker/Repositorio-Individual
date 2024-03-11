@@ -1,4 +1,5 @@
 const db = require('../util/database');
+const bcrypt = require('bcryptjs');
 
 module.exports = class Usuario {
 
@@ -10,25 +11,19 @@ module.exports = class Usuario {
 
     //Este método servirá para guardar de manera persistente el nuevo objeto. 
     save() {
+        return bcrypt.hash(this.password, 12).then((password_cifrado) => {
+            return db.execute(
+                'INSERT INTO usarios (username, password) VALUES (?, ?)', // le puse usarios a mi tabla por error
+                [this.username, password_cifrado]
+                );
+            })
+            .catch((error) => console.log(error)); 
+    }
+
+    static fetchOne(username, password) {
         return db.execute(
-            'INSERT INTO usarios (username, password) VALUES (?, ?)', // le puse usarios a mi tabla en la base de datos
-            [this.username, this.password]
-        );
-    }
-
-    //Este método servirá para devolver los objetos del almacenamiento persistente.
-    static fetchOne(username, password){
-        return db.execute('SELECT * FROM usarios WHERE idfans=?',
-            [idfans]);
-    }
-
-    static fetch(idfans){
-        if(id){
-            return this.fetchOne(idfans);
-        }
-        else{
-            return this.fetchOne();
-        }
+            'SELECT * FROM usarios WHERE username=?', 
+            [username]);
     }
 
 }

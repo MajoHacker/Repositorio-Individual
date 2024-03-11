@@ -20,4 +20,18 @@ module.exports = class Fan {
        return db.execute('SELECT * FROM fans');
     }
 
+    static fetchOne(idfans){
+        return db.execute('SELECT * FROM fans WHERE idfans=?',
+            [idfans]);
+    }
+
+    static fetch(idfans){
+        if(id){
+            return this.fetchOne(idfans);
+        }
+        else{
+            return this.fetchOne();
+        }
+    }
+
 }

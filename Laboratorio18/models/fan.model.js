@@ -26,11 +26,11 @@ module.exports = class Fan {
     }
 
     static fetch(idfans){
-        if(id){
+        if(idfans){
             return this.fetchOne(idfans);
         }
         else{
-            return this.fetchOne();
+            return this.fetchAll();
         }
     }
 

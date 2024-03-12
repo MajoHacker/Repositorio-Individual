@@ -1,8 +1,20 @@
 <%- include('includes/head.ejs') %>
-<br><h3> Deja un comentario:</h3>
-    <form action="/comentarios/comentarios" method="POST">
-        <label class="label" for="opinion">Comentario:</label>
-        <input name="opinion" id="opinion" type="text" class="input"><br>
-        <br><input class="btn btn-outline-info" type="submit" value="Enviar"><br><br>
-    </form>
+
+<div class="container text-center">
+    <br>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h3 class="title">Deja un comentario:</h3>
+            <form action="/comentarios/comentarios" method="POST">
+                <div class="form-group">
+                    <label class="label" for="opinion">Comentario:</label>
+                    <input name="opinion" id="opinion" type="text" class="form-control">
+                </div>
+                <br>
+                <input class="btn btn-outline-info btn-block" type="submit" value="Enviar">
+            </form>
+        </div>
+    </div>
+</div>
+<br>
 <%- include('includes/foot.ejs') %>

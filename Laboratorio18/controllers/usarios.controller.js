@@ -24,7 +24,7 @@ exports.post_login = (request, response, next) => {
                             request.session.isLoggedIn = true;
                             request.session.username = user.username;
                             return request.session.save(err => {
-                                response.redirect('/construcciones');
+                                response.redirect('/');
                             });
                         } else {
                             request.session.error = 'El usuario y/o contraseña son incorrectos.';

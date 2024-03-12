@@ -1,25 +1,25 @@
 <%- include('includes/head.ejs') %>
 
-
-<% for(let fan of fans) { %>
-  <!-- parte 1 -->
-  <br>
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-4">
+<br>
+<div class="container">
+  <div class="row">
+    <% fans.forEach((fan, index) => { %>
+      <% if (index % 4 === 0) { %>
+        </div><div class="row">
+      <% } %>
+      <div class="col-md-3">
         <div class="card mb-4">
           <div class="card-body">
             <h5 class="card-title"><%= fan.nombre %></h5>
           </div>
         </div>
       </div>
-    </div>
+    <% }); %>
   </div>
-  <% } %>
-  
+</div>
 
-<% if(ultimo_fan != '') { %>
-  <div class="text-center">EL ultimo fan fue <%= ultimo_fan %>.</div>
+<% if(ultimo_fan !== '') { %>
+  <div class="text-center">El último fan fue <%= ultimo_fan %>.</div>
 <% } %>
 
 <%- include('includes/contenido.ejs') %>

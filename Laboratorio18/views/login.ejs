@@ -1,6 +1,10 @@
 <%- include('includes/head.ejs', {username: username}) %>
-
 <h1 class="title"><% if(registrar) { %>Bienvenido<% } else { %>Hola de nuevo<% } %></h1>
+<% if (error) { %> 
+    <div class="notification is-danger">
+        <strong><%= error %></strong>
+    </div>
+<% } %>
 <form action="/users/<% if(registrar) { %>signup<% } else { %>login<% } %>" method="POST">
     <label class="label" for="username">Nombre de usuario</label>
     <input name="username" id="username" type="text" class="input"><br>
@@ -8,5 +12,4 @@
     <input name="password" id="password" type="password" class="input"><br><br>
     <input class="button is-success" type="submit" value="<% if(registrar) { %>Registrarse<% } else { %>Entrar<% } %>">
 </form>
-
 <%- include('includes/foot.ejs') %>

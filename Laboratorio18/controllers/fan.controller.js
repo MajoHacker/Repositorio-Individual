@@ -4,6 +4,7 @@ exports.get_fans = (request, response, next) => {
     console.log('Ruta /fan');
     response.render('fan', {
       username: request.session.username || '',
+      csrfToken: request.csrfToken(),
     });
   };
 

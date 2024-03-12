@@ -13,16 +13,19 @@ module.exports = class Usuario {
     save() {
         return bcrypt.hash(this.password, 12).then((password_cifrado) => {
             return db.execute(
-                'INSERT INTO usarios (username, password) VALUES (?, ?)', // le puse usarios a mi tabla por error
+                'INSERT INTO usarios (username, password) VALUES (?, ?)',
                 [this.username, password_cifrado]
                 );
             })
-            .catch((error) => console.log(error)); 
+            .catch((error) => {
+                console.log(error);
+                throw Error('Nombre de usuario duplicado: Ya existe un usuario con ese nombre');
+            }); 
     }
 
     static fetchOne(username, password) {
         return db.execute(
-            'SELECT * FROM usarios WHERE username=?', 
+            'SELECT * FROM usarios WHERE username=?',  // asi lo tengo en mi DB
             [username]);
     }
 

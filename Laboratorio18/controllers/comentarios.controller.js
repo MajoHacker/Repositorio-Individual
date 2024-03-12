@@ -4,6 +4,7 @@ exports.get_comentarios = (request, response, next) => {
     console.log('Ruta /comentarios');
     response.render('comentarios', {
         username: request.session.username || '',
+        csrfToken: request.csrfToken(),
     })
 };
 

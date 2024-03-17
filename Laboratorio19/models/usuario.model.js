@@ -34,8 +34,8 @@ module.exports = class Usuario {
             `SELECT funcion 
             FROM usarios u, asigna a, rol r, posee p, permiso per
             WHERE u.username = ? AND u.username = a.username
-            AND a.idrol = r.id AND r.id = p.idrol 
-            AND p.idpermiso = per.id`, 
+            AND a.idrol = r.idrol AND r.idrol = p.idrol 
+            AND p.idpermiso = per.idpermiso`, 
             [username]);
     }
 

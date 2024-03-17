@@ -5,6 +5,7 @@ exports.get_fans = (request, response, next) => {
     response.render('fan', {
       username: request.session.username || '',
       csrfToken: request.csrfToken(),
+      permisos: request.session.permisos || [],
     });
   };
 
@@ -43,6 +44,7 @@ exports.get_root = (request, response, next) => {
         fans: rows,
         ultimo_fan: ultimo_fan,
         username: request.session.username || '',
+        permisos: request.session.permisos || [],
       });
     })
     .catch((error) => {

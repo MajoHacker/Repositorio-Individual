@@ -11,7 +11,8 @@ exports.get_fans = (request, response, next) => {
 
 exports.post_fans = (request, response, next) => {
     console.log(request.body);
-    const fans = new Fan(request.body.nombre);
+    console.log(request.file);
+    const fans = new Fan(request.file.filename);
     
     
     fans.save()

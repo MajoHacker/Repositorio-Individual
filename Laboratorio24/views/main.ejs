@@ -1,31 +1,96 @@
-<%- include('includes/head.ejs') %>
-<br>
-<br>
-<div class="input-group flex-nowrap">
-  <input type="text" class="form-control" placeholder="Busca a un fan" aria-label="Busca fan" aria-describedby="addon-wrapping">
-</div>
+<%- include('includes/head.ejs', {
+  username: username, 
+  permisos: permisos
+}) %>
 
-<br>
+<br><br>
 <div class="container">
-  <div class="row">
-    <% fans.forEach((fan, index) => { %>
-      <% if (index % 4 === 0) { %>
-        </div><div class="row">
-      <% } %>
-      <div class="col-md-3">
-        <div class="card mb-4">
-          <div class="card-body">
-            <img src="uploads/<%= fan.nombre %>">
-          </div>
-        </div>
-      </div>
-    <% }); %>
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <input id="buscar" class="form-control form-control-sm is-info" type="text" placeholder="Buscar a un fan"/><br><br>
+    </div>
   </div>
+  <div id="respuesta_ajax">
+    <div class="row">
+      <% if (fans.length < 1) { %>
+          <div class="alert alert-info" role="alert">
+              No existe el fan.
+          </div>
+      <% } %>
+      <% let columns = 0; %>
+      <% for (let fan of fans) { %>
+          <% columns++ %>
+          <div class="col-md-3 mb-4">
+              <div class="card">
+                  <img src="uploads/<%= fan.nombre %>" class="card-img-top" alt="Imagen de <%= fan.nombre %>">
+                  <div class="card-body">
+                      <h5 class="card-title">@<%= fan.nombre %></h5>
+                  </div>
+              </div>
+          </div>
+          <% if (columns % 4 == 0) { %>
+              </div>
+              <div class="row">
+          <% } %>
+          
+      <% } %>
+    </div>   
+  </div>
+  <% if(ultimo_fan != '') { %>
+  <div>El último fan es <%- ultimo_fan %>.</div>
+  <% } %>
 </div>
 
-<% if(ultimo_fan !== '') { %>
-  <div class="text-center">El último fan fue <%= ultimo_fan %>.</div>
-<% } %>
+<script>
+const accion_asincrona = () => {
+console.log('Buscando...');
+const valor_busqueda = document.getElementById('buscar').value;
+//función que manda la petición asíncrona
+fetch('/buscar/' + valor_busqueda, {
+  method: 'GET',
+  headers: {
+      'Content-Type': 'application/json',
+  }
+}).then((result) => {
+  console.log(result);
+  return result.json(); //Regresa otra promesa
+}).then((data) => {
+  console.log(data);
+  let html = '';
+  html += `
+  <div class="row">`;
+  if (data.fans.length < 1) { 
+      html += `
+      <div class="alert alert-info" role="alert">
+          No existe el fan.
+      </div>`;
+  }
+  let columns = 0;
+  for (let fan of data.fans) { 
+      columns++;
+      html += `
+      <div class="col-md-3 mb-4">
+          <div class="card">
+              <img src="uploads/${fan.nombre}" class="card-img-top" alt="Imagen de ${fan.nombre}">
+              <div class="card-body">
+                  <h5 class="card-title">@${fan.nombre}</h5>
+              </div>
+          </div>
+      </div>`;
+      if (columns % 4 == 0) {
+          html += `</div>
+          <div class="row">`;
+      }
+  } 
+  html += `</div>`;
+  //Modificamos el DOM de nuestra página de acuerdo a los datos de la segunda promesa
+  document.getElementById('respuesta_ajax').innerHTML = html;
+}).catch(err => {
+  console.log(err);
+});
+};
+document.getElementById('buscar').onkeyup = accion_asincrona;
+</script>
 
 <%- include('includes/contenido.ejs') %>
 <%- include('includes/foot.ejs') %>

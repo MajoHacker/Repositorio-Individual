@@ -34,4 +34,10 @@ module.exports = class Fan {
         }
     }
 
+    static search(valor_busqueda) {
+        return db.execute('SELECT * FROM fans WHERE nombre LIKE ?', 
+            ['%' + valor_busqueda + '%']);
+    }
+
+
 }

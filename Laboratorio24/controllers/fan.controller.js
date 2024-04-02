@@ -53,4 +53,12 @@ exports.get_root = (request, response, next) => {
     });
 };
 
+exports.get_buscar = (request, response, next) => {
+  Fan.search(request.params.valor_busqueda)
+      .then(([fans, fieldData]) => {
+          return response.status(200).json({fans: fans});
+      })
+      .catch((error) => {console.log(error)});
+};
+
  

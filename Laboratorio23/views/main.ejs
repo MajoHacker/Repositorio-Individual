@@ -1,0 +1,26 @@
+<%- include('includes/head.ejs') %>
+
+<br>
+<div class="container">
+  <div class="row">
+    <% fans.forEach((fan, index) => { %>
+      <% if (index % 4 === 0) { %>
+        </div><div class="row">
+      <% } %>
+      <div class="col-md-3">
+        <div class="card mb-4">
+          <div class="card-body">
+            <img src="uploads/<%= fan.nombre %>">
+          </div>
+        </div>
+      </div>
+    <% }); %>
+  </div>
+</div>
+
+<% if(ultimo_fan !== '') { %>
+  <div class="text-center">El último fan fue <%= ultimo_fan %>.</div>
+<% } %>
+
+<%- include('includes/contenido.ejs') %>
+<%- include('includes/foot.ejs') %>

@@ -3,48 +3,59 @@
   permisos: permisos
 }) %>
 
-<br><br>
-<div class="container">
-  <div class="row justify-content-center">
-    <div class="col-md-6">
-      <input id="buscar" class="form-control form-control-sm is-info" type="text" placeholder="Buscar a un fan"/><br><br>
-    </div>
-  </div>
-  <div id="respuesta_ajax">
-    <div class="row">
-      <% if (fans.length < 1) { %>
-          <div class="alert alert-info" role="alert">
-              No existe el fan.
-          </div>
-      <% } %>
-      <% let columns = 0; %>
-      <% for (let fan of fans) { %>
-          <% columns++ %>
-          <div class="col-md-3 mb-4">
-              <div class="card">
-                  <img src="uploads/<%= fan.nombre %>" class="card-img-top" alt="Imagen de <%= fan.nombre %>">
-                  <div class="card-body">
-                      <h5 class="card-title">@<%= fan.nombre %></h5>
-                  </div>
-              </div>
-          </div>
-          <% if (columns % 4 == 0) { %>
-              </div>
-              <div class="row">
-          <% } %>
-          
-      <% } %>
-    </div>   
-  </div>
-  <% if(ultimo_fan != '') { %>
-  <div>El último fan es <%- ultimo_fan %>.</div>
+<input type="hidden" id="_csrf" name="_csrf" value="<%= csrfToken %>" >
+
+<br>
+<input id="buscar" class="form-control" type="text" placeholder="Busca a un fan"/><br><br>
+
+<div id="respuesta_ajax">
+
+<div id="notificacion">
+  <% if (fans.length < 1) { %>
+      <div class="alert alert-info">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          No existe el fan.     
+      </div>       
   <% } %>
 </div>
 
+<div class="row">
+
+
+  <% let columns = 0; %>
+  <% for (let fan of fans) { %>
+      <% columns++ %>
+      <div class="col-md-3 mb-4">
+        <div class="card">
+            <img src="uploads/<%= fan.nombre %>" class="card-img-top" alt="Imagen de <%= fan.nombre %>">
+            <div class="card-body">
+                <h5 class="card-title">@<%= fan.nombre %></h5>
+            </div>
+            <button class="btn btn-danger" onclick="eliminar(<%= fan.idfans %>)">Eliminar</button>
+        </div>
+    </div>
+      
+      <% if (columns % 4 == 0 && columns < fans.length) { %>
+          </div>
+          <div class="row">
+      <% } %>
+      
+  <% } %>
+
+</div>   
+
+</div>
+
+<% if(ultimo_fan != '') { %>
+<div>El último fan fue <%- ultimo_fan %>.</div>
+<% } %>
+
 <script>
+
 const accion_asincrona = () => {
 console.log('Buscando...');
 const valor_busqueda = document.getElementById('buscar').value;
+
 //función que manda la petición asíncrona
 fetch('/buscar/' + valor_busqueda, {
   method: 'GET',
@@ -57,39 +68,119 @@ fetch('/buscar/' + valor_busqueda, {
 }).then((data) => {
   console.log(data);
   let html = '';
+
+  html += `<div id="notificacion">`;
+      if (data.fans.length < 1) { 
+          html += 
+              `<div class="alert alert-info">
+                  <button type="button" class="close" data-dismiss="alert">&times;</button>
+                  No existe el fan. 
+              </div>`;           
+      }
+  html += `</div>`;
+
   html += `
   <div class="row">`;
-  if (data.fans.length < 1) { 
-      html += `
-      <div class="alert alert-info" role="alert">
-          No existe el fan.
-      </div>`;
-  }
+
   let columns = 0;
   for (let fan of data.fans) { 
       columns++;
+
       html += `
       <div class="col-md-3 mb-4">
-          <div class="card">
-              <img src="uploads/${fan.nombre}" class="card-img-top" alt="Imagen de ${fan.nombre}">
-              <div class="card-body">
-                  <h5 class="card-title">@${fan.nombre}</h5>
-              </div>
-          </div>
-      </div>`;
-      if (columns % 4 == 0) {
+        <div class="card">
+          <img src="uploads/${fan.nombre}" class="card-img-top" alt="Imagen de ${fan.nombre}">
+            <div class="card-body">
+              <h5 class="card-title">@${fan.nombre}</h5>
+            </div>
+            <button class="btn btn-danger" onclick="eliminar(${fan.idfans})">Eliminar</button>
+        </div>
+    </div>
+      `;
+
+      if (columns % 4 == 0 && columns < data.fans.length) {
           html += `</div>
           <div class="row">`;
       }
   } 
+
   html += `</div>`;
-  //Modificamos el DOM de nuestra página de acuerdo a los datos de la segunda promesa
+
   document.getElementById('respuesta_ajax').innerHTML = html;
 }).catch(err => {
   console.log(err);
 });
 };
+
 document.getElementById('buscar').onkeyup = accion_asincrona;
+
+const eliminar = (id) => {
+  console.log(id)
+const csrf = document.getElementById('_csrf').value;
+
+//función que manda la petición asíncrona
+fetch('/delete', {
+  method: 'POST',
+  headers: {
+      'Content-Type': 'application/json',
+      'csrf-token': csrf
+  },
+  body: JSON.stringify({id: id})
+}).then(result => {
+  return result.json(); //Regresa otra promesa
+}).then(data => {
+  console.log(data);
+  let html = '';
+  
+  html += `<div id="notificacion">`;
+      if (data.fans.length < 1) { 
+          html += 
+              `<div class="alert alert-info">
+                  <button type="button" class="close" data-dismiss="alert">&times;</button>
+                  No existe el fan. 
+              </div>`;           
+      }
+  html += `</div>`;
+
+  html += `
+  <div class="row">`;
+
+  let columns = 0;
+  for (let fan of data.fans) { 
+      columns++;
+
+      html += `
+      <div class="col-md-3 mb-4">
+        <div class="card">
+          <img src="uploads/${fan.nombre}" class="card-img-top" alt="Imagen de ${fan.nombre}">
+            <div class="card-body">
+              <h5 class="card-title">@${fan.nombre}</h5>
+            </div>
+            <button class="btn btn-danger" onclick="eliminar(${fan.idfans})">Eliminar</button>
+        </div>
+    </div>`;
+
+      if (columns % 4 == 0 && columns < data.fans.length) {
+          html += `</div>
+          <div class="row">`;
+      }
+  } 
+
+  html += `</div>`;
+
+  document.getElementById('respuesta_ajax').innerHTML = html;
+
+  document.getElementById('notificacion').innerHTML = 
+      `<div class="alert alert-info">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          El fan fue eliminado 
+      </div>`;
+
+}).catch(err => {
+  console.log(err);
+});
+};
+
 </script>
 
 <%- include('includes/contenido.ejs') %>

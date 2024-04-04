@@ -39,5 +39,9 @@ module.exports = class Fan {
             ['%' + valor_busqueda + '%']);
     }
 
+    static delete(id) {
+        return db.execute('DELETE FROM fans WHERE idfans=?', 
+            [id]);
+    }
 
 }

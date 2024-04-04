@@ -46,6 +46,7 @@ exports.get_root = (request, response, next) => {
         ultimo_fan: ultimo_fan,
         username: request.session.username || '',
         permisos: request.session.permisos || [],
+        csrfToken: request.csrfToken(),
       });
     })
     .catch((error) => {
@@ -57,6 +58,17 @@ exports.get_buscar = (request, response, next) => {
   Fan.search(request.params.valor_busqueda)
       .then(([fans, fieldData]) => {
           return response.status(200).json({fans: fans});
+      })
+      .catch((error) => {console.log(error)});
+};
+
+exports.post_delete = (request, response, next) => {
+  Fan.delete(request.body.id)
+      .then(() => {
+          return Fan.fetch();
+      })
+      .then(([fans, fieldData]) => { 
+          return response.status(200).json({fans: fans})
       })
       .catch((error) => {console.log(error)});
 };
